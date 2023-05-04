@@ -1,6 +1,7 @@
 ﻿///// Refactoring
 ///// Performer: Andres Breton
 ///// Start Date: 05/05/2023 - 9:00 a.m.
+///// End Date 05/05/2023 - 10:47 a.m.
 
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,6 @@ namespace CodingAssessment.Refactor
 
     public class BirthingUnit
     {
-        /// <summary>
-        /// MaxItemsToRetrieve
-        /// </summary>
         private List<People> _people;
 
         public BirthingUnit()
@@ -90,14 +88,21 @@ namespace CodingAssessment.Refactor
             return olderThan30 ? _people.Where(x => x.Name == "Bob" && x.DOB < dobFor30) : _people.Where(x => x.Name == "Bob");
         }
 
+        ///// Added a detailed summary to the method to have a better understanding when using it.
+        /// <summary>
+        /// Concatenates the name of the given person with the given last name and returns that full name. If the combination exceeds 
+        /// 255 characters it gets truncated.
+        /// </summary>
+        /// <param name="person">The person that will have tha last name added.</param>
+        /// <param name="lastName">Last name to add to the person.</param>
+        /// <returns>The full combination of name and last name, truncated if it exceeded 255 characters.</returns>
         public string GetMarried(People p, string lastName)
         {
             if (lastName.Contains("test"))
                 return p.Name;
-            if ((p.Name.Length + lastName).Length > 255)
-            {
-                (p.Name + " " + lastName).Substring(0, 255);
-            }
+            ///// Adjusted the condition since it wasn't correct and added the return to ensure this method is returning the truncated version.
+            if ((p.Name.Length + lastName.Length) > 254)
+                return (p.Name + " " + lastName).Substring(0, 255);
 
             return p.Name + " " + lastName;
         }

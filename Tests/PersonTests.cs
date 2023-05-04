@@ -1,6 +1,7 @@
 using System;
 using FluentAssertions;
 using CodingAssessment.Refactor;
+using System.Linq;
 using Xunit;
 
 namespace Tests
@@ -119,6 +120,60 @@ namespace Tests
             }
 
             Assert.True(!differentNameExists);
+        }
+
+        [Fact]
+        public void GetMarried_ShouldReturnSameNameWhenTest()
+        {
+            // Arrange
+            // Create a people object to use and set variables.
+            var name = "Andres";
+            var dob = DateTime.UtcNow.Subtract(new TimeSpan(30 * 365, 0, 0, 0));
+            var person = new People(name, dob);
+            var lastName = "test";
+            
+            // Act
+            var marriedName = _birthingUnit.GetMarried(person, lastName);
+
+            // Assert
+            Assert.True(marriedName == person.Name);
+
+        }
+        
+        [Fact]
+        public void GetMarried_ShouldReturnPersonNamePlusGivenLastName()
+        {
+            // Arrange
+            // Create a people object to use and set variables.
+            var name = "Andres";
+            var dob = DateTime.UtcNow.Subtract(new TimeSpan(30 * 365, 0, 0, 0));
+            var person = new People(name, dob);
+            var lastName = "Breton";
+            
+            // Act
+            var marriedName = _birthingUnit.GetMarried(person, lastName);
+
+            // Assert
+            Assert.True(marriedName == (person.Name + " " + lastName));
+
+        }
+        
+        [Fact]
+        public void GetMarried_ShouldReturnPersonNamePlusGivenLastNameShorterThan255Characters()
+        {
+            // Arrange
+            // Create a people object to use and set variables.
+            var name = "Andresqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm";
+            var dob = DateTime.UtcNow.Subtract(new TimeSpan(30 * 365, 0, 0, 0));
+            var person = new People(name, dob);
+            var lastName = "Bretonqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfhjklzxcvbnm";
+            
+            // Act
+            var marriedName = _birthingUnit.GetMarried(person, lastName);
+
+            // Assert
+            Assert.True(marriedName.Length <= 255);
+
         }
     }
 }

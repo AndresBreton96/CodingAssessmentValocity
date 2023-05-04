@@ -1,4 +1,8 @@
-﻿using System;
+﻿///// Refactoring
+///// Performer: Andres Breton
+///// Start Date: 05/05/2023 - 9:00 a.m.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,13 +10,9 @@ namespace CodingAssessment.Refactor
 {
     public class People
     {
-        private static readonly DateTimeOffset Under16 = DateTimeOffset.UtcNow.AddYears(-15);
+        ///// Removed unused code. - Andres
         public string Name { get; private set; }
         public DateTimeOffset DOB { get; private set; }
-
-        public People(string name) : this(name, Under16.Date)
-        {
-        }
 
         public People(string name, DateTime dob)
         {

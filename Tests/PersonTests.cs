@@ -16,7 +16,7 @@ namespace Tests
             // Arrange
             // Set the number of people to create.
             var random = new Random();
-            int numberOfPeople = random.Next(0, 5);
+            int numberOfPeople = random.Next(1, 5);
             
             // Act
             var people = _birthingUnit.GetPeople(numberOfPeople);
@@ -32,7 +32,7 @@ namespace Tests
             // Arrange
             // Set the number of people to create.
             var random = new Random();
-            int numberOfPeople = random.Next(0, 5);
+            int numberOfPeople = random.Next(1, 5);
             var differentNameExists = false;
             
             // Act
@@ -54,7 +54,7 @@ namespace Tests
             // Arrange
             // Set the number of people to create and set variables.
             var random = new Random();
-            int numberOfPeople = random.Next(0, 5);
+            int numberOfPeople = random.Next(1, 5);
             var agesOutOfRange = false;
             var dobFor18 = DateTime.UtcNow.Subtract(new TimeSpan(18 * 365, 0, 0, 0));
             var dobFor85 = DateTime.UtcNow.Subtract(new TimeSpan(85 * 365, 0, 0, 0));
@@ -78,7 +78,7 @@ namespace Tests
             // Arrange
             // Set the number of people to create and set variables.
             var random = new Random();
-            int numberOfPeople = random.Next(0, 5);
+            int numberOfPeople = random.Next(1, 5);
             var olderThan30 = true;
             var differentNameOrAgeExists = false;
             var dobFor30 = DateTime.UtcNow.Subtract(new TimeSpan(30 * 365, 0, 0, 0));
@@ -88,10 +88,10 @@ namespace Tests
             var bobs = _birthingUnit.GetBobs(olderThan30);
 
             // Assert
-            // The list returned should contain only Bob.
+            // The list returned should contain only Bob and none DOB higher than the DOB for 30 years.
             foreach (var person in people)
             {
-                differentNameOrAgeExists = (person.Name != "Bob" || person.DOB <= dobFor30);
+                differentNameOrAgeExists = (person.Name != "Bob" || person.DOB > dobFor30);
             }
 
             Assert.True(!differentNameOrAgeExists);
@@ -103,7 +103,7 @@ namespace Tests
             // Arrange
             // Set the number of people to create and set variables.
             var random = new Random();
-            int numberOfPeople = random.Next(0, 5);
+            int numberOfPeople = random.Next(1, 5);
             var olderThan30 = false;
             var differentNameExists = false;
             

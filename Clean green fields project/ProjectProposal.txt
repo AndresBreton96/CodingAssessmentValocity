@@ -40,7 +40,8 @@ lines of a code review before going to QA. Once approved the QA pipeline would d
 using all the YAML file(s) set up on the pipeline (if there are multiple deployments which 
 I have seen) to make the correct replacements of environment variables and wait for an 
 approval from the QA team and again a Technical Leader, probably an architect at this
-point and repeat the process to now go live into production.
+point and repeat the process to now go live into production. I'm not an expert on this
+DevOps matter, however I do think that this is the minimum a project should have set up.
 
 
 

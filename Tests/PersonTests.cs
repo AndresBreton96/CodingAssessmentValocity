@@ -1,6 +1,7 @@
 using System;
 using FluentAssertions;
 using CodingAssessment.Refactor;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -77,21 +78,31 @@ namespace Tests
         public void GetBobs_ShouldReturnOnlyBobsOlderThan30()
         {
             // Arrange
-            // Set the number of people to create and set variables.
-            var random = new Random();
-            int numberOfPeople = random.Next(1, 5);
+            // Create and set variables.
             var olderThan30 = true;
             var differentNameOrAgeExists = false;
             var dobFor30 = DateTime.UtcNow.Subtract(new TimeSpan(30 * 365, 0, 0, 0));
+            var dobFor50 = DateTime.UtcNow.Subtract(new TimeSpan(50 * 365, 0, 0, 0));
+            var dobFor20 = DateTime.UtcNow.Subtract(new TimeSpan(20 * 365, 0, 0, 0));
+            var people = new List<People>()
+            {
+                new People("Bob", dobFor20),
+                new People("Betty", dobFor30),
+                new People("Bob", dobFor30),
+                new People("Bob", dobFor50),
+                new People("Betty", dobFor30)
+            };
+            
             
             // Act
-            var people = _birthingUnit.GetPeople(numberOfPeople);
             var bobs = _birthingUnit.GetBobs(olderThan30);
 
             // Assert
             // The list returned should contain only Bob and none DOB higher than the DOB for 30 years.
-            foreach (var person in people)
+            foreach (var person in bobs)
             {
+                Console.WriteLine(person.Name);
+                Console.WriteLine(person.DOB);
                 differentNameOrAgeExists = (person.Name != "Bob" || person.DOB > dobFor30);
             }
 
@@ -102,19 +113,27 @@ namespace Tests
         public void GetBobs_ShouldReturnOnlyBobsAnyAge()
         {
             // Arrange
-            // Set the number of people to create and set variables.
-            var random = new Random();
-            int numberOfPeople = random.Next(1, 5);
+            // Create and set variables.
             var olderThan30 = false;
             var differentNameExists = false;
+            var dobFor30 = DateTime.UtcNow.Subtract(new TimeSpan(30 * 365, 0, 0, 0));
+            var dobFor50 = DateTime.UtcNow.Subtract(new TimeSpan(50 * 365, 0, 0, 0));
+            var dobFor20 = DateTime.UtcNow.Subtract(new TimeSpan(20 * 365, 0, 0, 0));
+            var people = new List<People>()
+            {
+                new People("Bob", dobFor20),
+                new People("Betty", dobFor30),
+                new People("Bob", dobFor30),
+                new People("Bob", dobFor50),
+                new People("Betty", dobFor30)
+            };
             
             // Act
-            var people = _birthingUnit.GetPeople(numberOfPeople);
             var bobs = _birthingUnit.GetBobs(olderThan30);
 
             // Assert
             // The list returned should contain only Bob.
-            foreach (var person in people)
+            foreach (var person in bobs)
             {
                 differentNameExists = person.Name != "Bob";
             }

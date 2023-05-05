@@ -80,10 +80,12 @@ namespace Utility.Valocity.ProfileHelper
         }
 
         ///// You missed the summary in the remaining methods. It is good to have it, don't miss it! 
+        ///// This method is set as private, it should be public since it seems meant to be used from the outside of the class.
         ///// This method does have a good name for the entry parameter, well done. - Andres
         private IEnumerable<People> GetBobs(bool olderThan30)
         {
             ///// Nice usage of the ternary conditional operator. 
+            ///// The DOB condition is not correct, it should be minor than instead of higher than.
             ///// You could set apart the DateTime value creation for better readability. - Andres
             return olderThan30 ? _people.Where(x => x.Name == "Bob" && x.DOB >= DateTime.Now.Subtract(new TimeSpan(30 * 356, 0, 0, 0))) : _people.Where(x => x.Name == "Bob");
         }
@@ -94,6 +96,7 @@ namespace Utility.Valocity.ProfileHelper
         {
             if (lastName.Contains("test"))
                 return p.Name;
+            ///// This if statement is not working, be careful with where you put the brackets.
             if ((p.Name.Length + lastName).Length > 255)
             {
                 ///// This should also return, otherwise you are not saving the text anywhere. - Andres

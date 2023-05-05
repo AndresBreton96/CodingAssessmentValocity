@@ -1,0 +1,53 @@
+For me, the base of a project like this one would be on the data itself,
+so having a well defined data is where I would start, defining which properties
+and maybe internal functionalities would my data models have, for example:
+
+For Cards:
+    - Each card must have a value between Ace to King.
+    - Each card must belong to a suit.
+
+For Suits:
+    - Each suit will have a "house" (Eg. diamonds).
+    - Each suit will have 13 cards.
+
+For Decks:
+    - Each deck will contain 4 suits.
+
+Of course there could be a lot of properties I'm not mentioning but the idea
+is to have the most specified possible properties before start coding anything.
+That way I will know what I need to code to avoid going back and forward 
+changing or adding properties and risking the development.
+
+
+
+The next thing I would think of is the environments that the project may need.
+I believe that a project should always have at least three environments, one for 
+development, one for release and a third one for QA. Now, ideally if the resources
+are available, you would need to set 3 databases, however since the cards haven't 
+changed for a lot of time and I don't think they are something that will change, 
+the project could be built with something simpler than a DB, maybe loading the cards
+from a plain text or a Json File. However if the game grows more complex, you may want
+to save scores, maybe even add multiplayer functionalities, so in that case the best 
+way to proceed would be to have databases, there would be two databases without 
+exposure for development and QA only and of course the database for production.
+
+Another thing that I think it's very related to the environments setup, is planning
+the delivery pipeline and I would go with a similar structure to the environments, 
+going with three pipelines, first development pipeline, which is going to trigger
+a QA pipeline every time a push is sent to the main development branch, this trigger
+would require a previous approval from the a Technical Leader that would go in the
+lines of a code review before going to QA. Once approved the QA pipeline would deploy 
+using all the YAML file(s) set up on the pipeline (if there are multiple deployments which 
+I have seen) to make the correct replacements of environment variables and wait for an 
+approval from the QA team and again a Technical Leader, probably an architect at this
+point and repeat the process to now go live into production.
+
+
+
+Now that I have set up my environments and pipelines, next step would be think about 
+the structure. Keeping in mind that for a project like this, that can grow a lot and 
+has to have a good scalability, I would probably choose a repository pattern architecture
+and combine it with a layered structure. I would do so because of the detachability it 
+would have between levels making it easier to maintain, improve, and have more coders
+working on the same project, also it will make possible to have a little freedom on 
+the selection of the UI of choice.
